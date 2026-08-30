@@ -1,0 +1,155 @@
+table Orders
+	lineageTag: 3e6b759b-2efb-467e-935f-f0186460ea65
+
+	column Order_ID
+		dataType: string
+		lineageTag: 93e99a68-8b09-4fb2-a260-69dfdaef9774
+		summarizeBy: none
+		sourceColumn: Order_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7b11b458-dee5-4e06-8cb8-229bf9abda31
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variatie
+			isDefault
+			relationship: 62cdbd37-8a37-4354-b638-701e99d288d6
+			defaultHierarchy: LocalDateTable_f89f5ab9-9b00-458c-a06a-733498557b0a.Datumhiërarchie
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Week
+		dataType: string
+		lineageTag: 33d8a31d-c5b7-437d-9735-c70925cd97fc
+		summarizeBy: none
+		sourceColumn: Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 7862e2d9-0c94-408b-9ba5-f1f6e899f5bd
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_Type
+		dataType: string
+		lineageTag: 7ac83fb2-19c9-45e3-99cf-dead5cdb4662
+		summarizeBy: none
+		sourceColumn: Customer_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Service
+		dataType: string
+		lineageTag: 51da617b-3fc3-4799-a33c-057e2daa16a1
+		summarizeBy: none
+		sourceColumn: Service
+
+		annotation SummarizationSetBy = Automatic
+
+	column Planned_Minutes
+		dataType: int64
+		formatString: 0
+		lineageTag: 3831e4b4-5dd7-4f5b-98cc-9d42824c5f42
+		summarizeBy: sum
+		sourceColumn: Planned_Minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Actual_Minutes
+		dataType: int64
+		formatString: 0
+		lineageTag: 67ee0395-bad8-4c14-a6d8-8f4893858f64
+		summarizeBy: sum
+		sourceColumn: Actual_Minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Delay_Minutes
+		dataType: int64
+		formatString: 0
+		lineageTag: cd884e72-b211-42e0-b1e8-14cba8ce790a
+		summarizeBy: sum
+		sourceColumn: Delay_Minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column On_Time
+		dataType: string
+		lineageTag: f2f4e928-6cdd-49e3-bc99-0ad3f0acdcd7
+		summarizeBy: none
+		sourceColumn: On_Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Complaints
+		dataType: int64
+		formatString: 0
+		lineageTag: ba95044d-dbac-41f8-b9f9-7261a920ef8b
+		summarizeBy: sum
+		sourceColumn: Complaints
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revenue_EUR
+		dataType: double
+		lineageTag: 31b25bbe-4d39-4d8b-a1e9-6d7e2be2b772
+		summarizeBy: sum
+		sourceColumn: Revenue_EUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Cost_EUR
+		dataType: double
+		lineageTag: 58680ed1-f293-4212-9843-b318f175cc24
+		summarizeBy: sum
+		sourceColumn: Cost_EUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Driver
+		dataType: string
+		lineageTag: bec142c2-c4b1-4221-b305-1fde31f9522b
+		summarizeBy: none
+		sourceColumn: Driver
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: b043b8f9-b02b-46a9-a4ab-3fbe6e393526
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Orders = m
+		mode: import
+		source =
+				let
+				    Bron = Excel.Workbook(File.Contents("C:\Users\GuellaiMektoub\Documents\GitHub\TS Data\Data\PowerBI_GitHub_Demo_Data.xlsx"), null, true),
+				    Orders_Sheet = Bron{[Item="Orders",Kind="Sheet"]}[Data],
+				    #"Headers met verhoogd niveau" = Table.PromoteHeaders(Orders_Sheet, [PromoteAllScalars=true]),
+				    #"Type gewijzigd" = Table.TransformColumnTypes(#"Headers met verhoogd niveau",{{"Order_ID", type text}, {"Date", Int64.Type}, {"Week", type text}, {"Region", type text}, {"Customer_Type", type text}, {"Service", type text}, {"Planned_Minutes", Int64.Type}, {"Actual_Minutes", Int64.Type}, {"Delay_Minutes", Int64.Type}, {"On_Time", type text}, {"Complaints", Int64.Type}, {"Revenue_EUR", type number}, {"Cost_EUR", type number}, {"Driver", type text}, {"Status", type text}}),
+				    #"Type gewijzigd1" = Table.TransformColumnTypes(#"Type gewijzigd",{{"Date", type date}})
+				in
+				    #"Type gewijzigd1"
+
+	annotation PBI_NavigationStepName = Navigatie
+
+	annotation PBI_ResultType = Table
+

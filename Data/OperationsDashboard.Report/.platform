@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "OperationsDashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2b3aaa08-79bd-4f62-8f83-f908520efc59"
+  }
+}
