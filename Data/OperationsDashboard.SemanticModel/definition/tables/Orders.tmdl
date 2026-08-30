@@ -1,15 +1,6 @@
 table Orders
 	lineageTag: 3e6b759b-2efb-467e-935f-f0186460ea65
 
-	measure 'Total Orders' =
-			
-			CALCULATE(
-			    COUNTROWS(Orders),
-			    Orders[Status] = "Completed"
-			)
-		formatString: 0
-		lineageTag: 15fb3faa-4291-4bbe-8c63-28d054fe9b07
-
 	measure 'Total Revenue' =
 			
 			CALCULATE(
