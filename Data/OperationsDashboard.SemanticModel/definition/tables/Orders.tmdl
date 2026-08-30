@@ -1,6 +1,42 @@
 table Orders
 	lineageTag: 3e6b759b-2efb-467e-935f-f0186460ea65
 
+	measure 'Total Orders' =
+			
+			CALCULATE(
+			    COUNTROWS(Orders),
+			    Orders[Status] = "Completed"
+			)
+		formatString: 0
+		lineageTag: 15fb3faa-4291-4bbe-8c63-28d054fe9b07
+
+	measure 'Total Revenue' =
+			
+			CALCULATE(
+			    SUM(Orders[Revenue_EUR]),
+			    Orders[Status] = "Completed"
+			)
+		lineageTag: f94353e9-02dc-4b23-b8af-382cf7d73296
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Cost' =
+			
+			CALCULATE(
+			    SUM(Orders[Cost_EUR]),
+			    Orders[Status] = "Completed"
+			)
+		lineageTag: d765df3d-1a2d-444b-8dcf-3f7a8b73f60e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Margin =
+			
+			[Total Revenue] - [Total Cost]
+		lineageTag: daa94b3e-60ec-4ed4-b92b-c4728e1af3f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Order_ID
 		dataType: string
 		lineageTag: 93e99a68-8b09-4fb2-a260-69dfdaef9774
